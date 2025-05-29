@@ -12,13 +12,13 @@ import java.sql.SQLException;
 public class Util {
     // set up a database connection
     // JDBC
-    private static final String url = "jdbc:mysql://localhost:3306/ProjectHabsida";
-    private static final String user = "root";
-    private static final String password = "Mfghost66";
+    private static final String URL = "jdbc:mysql://localhost:3306/ProjectHabsida";
+    private static final String USER = "root";
+    private static final String PASSWORD = "Mfghost66";
 
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(url, user, password);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при подключении к БД", e);
         }
@@ -32,9 +32,9 @@ public class Util {
             try {
                 Configuration configuration = new Configuration();
                 configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
-                configuration.setProperty("hibernate.connection.url", url);
-                configuration.setProperty("hibernate.connection.username", user);
-                configuration.setProperty("hibernate.connection.password", password);
+                configuration.setProperty("hibernate.connection.url", URL);
+                configuration.setProperty("hibernate.connection.username", USER);
+                configuration.setProperty("hibernate.connection.password", PASSWORD);
                 configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
                 configuration.setProperty("hibernate.show_sql", "true");
 
@@ -50,5 +50,7 @@ public class Util {
             }
         }
         return sessionFactory;
+
     }
+    private Util() {}
 }
