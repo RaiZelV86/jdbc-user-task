@@ -8,10 +8,6 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    public UserDaoHibernateImpl() {
-
-    }
-
 
     @Override
     public void createUsersTable() {
