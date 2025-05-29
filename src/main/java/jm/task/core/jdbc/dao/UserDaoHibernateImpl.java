@@ -8,10 +8,6 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    public UserDaoHibernateImpl() {
-
-    }
-
 
     @Override
     public void createUsersTable() {
@@ -19,7 +15,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 CREATE TABLE IF NOT EXISTS users (
                 id BIGINT PRIMARY KEY AUTO_INCREMENT, 
                 name VARCHAR (50),
-                lastname VARCHAR(50),
+                last_name VARCHAR(50),
                 age TINYINT
                 )
                 """;
@@ -31,7 +27,6 @@ public class UserDaoHibernateImpl implements UserDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-                
     }
 
     @Override
@@ -84,9 +79,8 @@ public class UserDaoHibernateImpl implements UserDao {
             return session.createQuery("from User", User.class).list();
         } catch (Exception e) {
             e.printStackTrace();
+            return List.of();
         }
-
-        return null;
     }
 
     @Override

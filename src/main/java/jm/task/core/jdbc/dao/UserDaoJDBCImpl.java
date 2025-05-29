@@ -1,17 +1,17 @@
 package jm.task.core.jdbc.dao;
 
-import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    public UserDaoJDBCImpl() {
-
-    }
 
     @Override
     public void createUsersTable() {
@@ -19,7 +19,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 CREATE TABLE IF NOT EXISTS users (
                     id BIGINT PRIMARY KEY AUTO_INCREMENT,
                     name VARCHAR(50),
-                    lastName VARCHAR(50),
+                    last_name VARCHAR(50),
                     age TINYINT
                 )
                 """;
@@ -46,7 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO users (name, lastname, age) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO users (name, last_name, age) VALUES(?, ?, ?)";
 
         try (Connection conn = Util.getConnection();
              PreparedStatement prs = conn.prepareStatement(sql)) {
@@ -86,7 +86,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 User user = new User();
                 user.setId(rst.getLong("id"));
                 user.setName(rst.getString("name"));
-                user.setLastName(rst.getString("lastname"));
+                user.setLastName(rst.getString("last_name"));
                 user.setAge(rst.getByte("age"));
                 users.add(user);
             }
