@@ -16,6 +16,11 @@ public class Util {
     private static final String USER = "root";
     private static final String PASSWORD = "Mfghost66";
 
+    //Hibernate
+    private static SessionFactory sessionFactory;
+
+    private Util() {}
+
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -23,9 +28,6 @@ public class Util {
             throw new RuntimeException("Ошибка при подключении к БД", e);
         }
     }
-
-    //Hibernate
-    private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -52,5 +54,4 @@ public class Util {
         return sessionFactory;
 
     }
-    private Util() {}
 }
