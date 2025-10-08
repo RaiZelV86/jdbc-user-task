@@ -8,13 +8,14 @@ import org.hibernate.cfg.Configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Util {
     // set up a database connection
     // JDBC
     private static final String URL = "jdbc:mysql://localhost:3306/ProjectHabsida";
     private static final String USER = "root";
-    private static final String PASSWORD = "Mfghost66";
+    private static final String PASSWORD = "mfg86";
 
     //Hibernate
     private static SessionFactory sessionFactory;
@@ -25,21 +26,28 @@ public class Util {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            throw new RuntimeException("Ошибка при подключении к БД", e);
+            throw new RuntimeException("JDBC connection failed", e);
         }
     }
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
-            try {
-                Configuration configuration = new Configuration();
-                configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
-                configuration.setProperty("hibernate.connection.url", URL);
-                configuration.setProperty("hibernate.connection.username", USER);
-                configuration.setProperty("hibernate.connection.password", PASSWORD);
-                configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-                configuration.setProperty("hibernate.show_sql", "true");
 
+            try {
+                Properties props = new Properties();
+
+                props.put("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
+                props.put("hibernate.connection.url", URL);
+                props.put("hibernate.connection.username", USER);
+                props.put("hibernate.connection.password", PASSWORD);
+
+                props.put("hibernate.hbm2ddl.auto", "none");
+                props.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+                props.put("hibernate.show_sql", "true");
+                props.put("hibernate.format_sql", "true");
+
+                Configuration configuration = new Configuration();
+                configuration.setProperties(props);
                 configuration.addAnnotatedClass(User.class);
 
                 sessionFactory = configuration
